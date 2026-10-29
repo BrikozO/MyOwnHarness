@@ -1,0 +1,16 @@
+{
+  "name": "my-own-harness",
+  "owner": {
+    "name": "Oleg Yakushev"
+  },
+  "metadata": {
+    "description": "Личный маркетплейс скиллов и плагинов"
+  },
+  "plugins": [
+    {
+      "name": "my-own-harness",
+      "source": "./",
+      "description": "Скиллы write-db-doc, commit-push-task и release-tag"
+    }
+  ]
+}
