@@ -1,0 +1,26 @@
+<!-- @dsCard group="Блоки" width=1920 height=560 subtitle="Так нельзя / Так правильно" -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>CompareCode</title></head>
+<body>
+<div class="mt-slide" style="height:560px;padding:64px 120px">
+<div class="mt-split" style="gap:48px">
+  <div><p class="mt-label mt-label--warn card-title">Так нельзя</p>
+<pre class="mt-code code"><span class="k">def</span> <span class="f">add_tag</span>(tag, tags=[]):
+    tags.append(tag)
+    <span class="k">return</span> tags
+
+add_tag(<span class="s">"друзья"</span>)  <span class="c"># ['друзья']</span>
+add_tag(<span class="s">"работа"</span>)  <span class="c"># ['друзья', 'работа']</span></pre>
+  <p class="mt-term__title card-title" style="margin-top:34px">Почему</p><p class="mt-term__text body-sm">[] создаётся один раз при def</p></div>
+  <div><p class="mt-label card-title">Так правильно</p>
+<pre class="mt-code code"><span class="k">def</span> <span class="f">add_tag</span>(tag, tags=<span class="k">None</span>):
+    <span class="k">if</span> tags <span class="k">is None</span>:
+        tags = []
+    tags.append(tag)
+    <span class="k">return</span> tags</pre>
+  <p class="mt-term__title card-title" style="margin-top:34px">Правило</p><p class="mt-term__text body-sm">по умолчанию — только неизменяемое: None, 0, "", ()</p></div>
+</div>
+</div>
+</body>
+</html>

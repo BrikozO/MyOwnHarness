@@ -1,0 +1,146 @@
+/* МТУСИ · Презентации курса — классы слайдов.
+   Холст 1920×1080. Цвета, отступы и радиусы — только var(--токен) из tokens.json;
+   размеры шрифта — классы стилей (slide-title, body, code …) из tokens.css. */
+
+/* ── Слайд ─────────────────────────────────────────────── */
+.mt-slide {
+  position: relative; width: 1920px; height: 1080px; overflow: hidden;
+  background: var(--slide-bg); color: var(--ink);
+  font-family: var(--font-sans); box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+.mt-slide *, .mt-slide *::before, .mt-slide *::after { box-sizing: border-box; }
+.mt-slide :where(p, h1, h2, h3, ol, ul, pre) { margin: 0; padding: 0; }
+.mt-slide--dark { background: var(--slide-bg-dark); color: var(--on-dark); }
+
+/* Шапка контентного слайда */
+.mt-head { position: absolute; left: var(--slide-margin); right: var(--slide-margin); top: var(--eyebrow-top); }
+.mt-eyebrow { color: var(--eyebrow); }
+.mt-title { color: var(--heading); margin-top: 10px; }
+.mt-lead { color: var(--ink); margin-top: 18px; }
+
+/* Тело: от content-top до колонтитула */
+.mt-body { position: absolute; left: var(--slide-margin); right: var(--slide-margin); top: var(--content-top); }
+.mt-body--lead { top: 336px; }
+.mt-body--code { top: 262px; }
+
+/* Колонтитул */
+.mt-footer { position: absolute; left: var(--slide-margin); right: var(--slide-margin); top: var(--footer-top);
+  display: flex; justify-content: space-between; color: var(--footer); }
+
+/* Сетки */
+.mt-grid { display: grid; gap: var(--gap-grid); }
+.mt-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.mt-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.mt-grid--4 { grid-template-columns: repeat(4, 1fr); }
+.mt-split { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.mt-split--code { grid-template-columns: 974px 1fr; }
+.mt-stack { display: flex; flex-direction: column; gap: var(--gap-stack); }
+
+/* ── Обложка занятия ───────────────────────────────────── */
+.mt-cover__logo { position: absolute; left: var(--slide-margin); top: 90px; height: 80px; width: auto; }
+.mt-cover__glyph { position: absolute; inset: 0; width: 1920px; height: 1080px; pointer-events: none; }
+.mt-cover__glyph text { fill: var(--cover-glyph); font: 700 1000px/1 Helvetica, Arial, sans-serif; }
+.mt-cover__text { position: absolute; left: var(--slide-margin); top: 503px; width: 1150px; }
+.mt-cover__kicker { color: var(--on-dark-kicker); }
+.mt-cover__lesson { color: var(--on-dark); margin-top: 34px; text-transform: uppercase; }
+.mt-cover__title { color: var(--on-dark); margin-top: 30px; }
+.mt-cover__subtitle { color: var(--on-dark-muted); margin-top: 18px; }
+
+/* ── Раздел ────────────────────────────────────────────── */
+.mt-section__text { position: absolute; left: var(--slide-margin); top: 340px; width: 1500px; }
+.mt-section__number { color: var(--section-number); }
+.mt-section__title { color: var(--on-dark); margin-top: 26px; }
+.mt-section__lead { color: var(--on-dark-muted); margin-top: 26px; }
+.mt-section__logo { position: absolute; right: var(--slide-margin); top: 944px; height: 56px; width: auto; }
+
+/* ── Титул по шаблону брендбука (белый, здание, гексагоны) ─ */
+.mt-brand-title__building { position: absolute; inset: 0; width: 1920px; height: 1080px; object-fit: cover; }
+.mt-brand-title__logo { position: absolute; left: 122px; top: 48px; width: 826px; height: auto; }
+.mt-brand-title__text { position: absolute; left: var(--slide-margin); top: 520px; width: 1100px; }
+.mt-brand-title__title { color: var(--heading); }
+.mt-brand-title__meta { color: var(--eyebrow); margin-top: 28px; }
+
+/* Гексагоны-уголки (мастер шаблона: 200×216 справа сверху; слева снизу — отражён и повёрнут на 270°) */
+.mt-hex { position: absolute; width: 200px; height: 216px; pointer-events: none; }
+.mt-hex--tr { right: 0; top: 0; }
+.mt-hex--bl { left: 8px; bottom: -8px; transform: rotate(270deg) scaleX(-1); }
+
+/* ── Карточка (план, итоги) ────────────────────────────── */
+.mt-card { background: var(--card-bg); border-radius: var(--radius-card); padding: var(--pad-card); min-height: 226px; }
+.mt-card__meta { color: var(--eyebrow); }
+.mt-card__title { color: var(--heading); margin-top: 22px; }
+.mt-card__text { color: var(--ink); margin-top: 18px; }
+.mt-card__code { color: var(--heading); font-family: var(--font-mono); font-size: 36px; line-height: 44px; font-weight: 500; }
+
+/* ── Карточка-шаг (обводка + номер) ───────────────────── */
+.mt-step { border: 2px solid var(--card-border); border-radius: var(--radius-card); padding: 39px 37px 37px;
+  min-height: 414px; display: flex; flex-direction: column; }
+.mt-step__title { color: var(--heading); margin-top: 28px; }
+.mt-step__text { color: var(--ink); margin-top: 22px; }
+.mt-step__foot { color: var(--eyebrow); margin-top: auto; }
+
+/* ── Бейджи ────────────────────────────────────────────── */
+.mt-badge { display: inline-flex; align-items: center; justify-content: center; flex: none;
+  width: 72px; height: 72px; border-radius: var(--radius-badge); background: var(--badge-bg); color: var(--on-dark); }
+.mt-badge--sm { width: 52px; height: 52px; font-size: 28px; }
+.mt-badge--square { width: 64px; height: 64px; border-radius: var(--radius-box); font-size: 32px; }
+
+/* ── Нумерованный список ───────────────────────────────── */
+.mt-steps { list-style: none; display: flex; flex-direction: column; gap: 38px; }
+.mt-steps li { display: flex; gap: 32px; align-items: flex-start; color: var(--ink); }
+.mt-steps li .mt-badge { margin-top: -4px; }
+
+/* ── Блок кода ─────────────────────────────────────────── */
+.mt-code { background: var(--code-bg); color: var(--code-text); border-radius: var(--radius-code);
+  padding: 37px var(--pad-code); font-family: var(--font-mono); white-space: pre; overflow: hidden; }
+.mt-code .k { color: var(--code-keyword); }
+.mt-code .s { color: var(--code-string); }
+.mt-code .c { color: var(--code-comment); }
+.mt-code .f { color: var(--code-function); }
+.mt-code .t { color: var(--code-type); }
+.mt-code .p { color: var(--code-function); }   /* приглашение >>> и $ */
+.mt-label { color: var(--heading); margin-bottom: 24px; }
+.mt-label--warn { color: var(--warn); }
+
+/* ── Таблица «код → пояснение» ─────────────────────────── */
+.mt-rows { display: flex; flex-direction: column; gap: var(--gap-stack); }
+.mt-row { display: grid; grid-template-columns: 1fr 1fr; align-items: center; min-height: 80px;
+  padding: 0 36px; background: var(--row-bg); border-radius: var(--radius-row); }
+.mt-row__code { color: var(--heading); font-family: var(--font-mono); }
+.mt-row__text { color: var(--ink); padding-left: 32px; }
+
+/* ── Выноска ───────────────────────────────────────────── */
+.mt-callout { background: var(--card-bg); border-radius: var(--radius-code); padding: 34px var(--pad-callout); }
+.mt-callout__title { color: var(--heading); }
+.mt-callout__text { color: var(--ink); margin-top: 14px; }
+
+/* ── Колонки-термины (под кодом) ───────────────────────── */
+.mt-terms { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap-grid); }
+.mt-terms--3 { grid-template-columns: repeat(3, 1fr); }
+.mt-term__title { color: var(--heading); }
+.mt-term__title--warn { color: var(--warn); }
+.mt-term__text { color: var(--ink); margin-top: 14px; }
+
+/* ── Схема «имена → один объект» ───────────────────────── */
+.mt-ref { display: grid; grid-template-columns: 278px 72px 1fr; gap: var(--gap-stack) 0; align-items: center; }
+.mt-ref__name { grid-column: 1; background: var(--card-bg); border-radius: var(--radius-box); padding: 22px 26px; min-height: 110px; }
+.mt-ref__name b { display: block; color: var(--heading); font-family: var(--font-mono); font-weight: 600; }
+.mt-ref__arrow { grid-column: 2; text-align: center; color: var(--heading); font-size: 48px; line-height: 1; }
+.mt-ref__object { grid-column: 3; grid-row: 1 / span 2; align-self: stretch; display: flex; flex-direction: column; justify-content: center;
+  background: var(--brand-primary); color: var(--on-dark); border-radius: var(--radius-row); padding: 0 28px; }
+.mt-ref__object small { color: var(--on-dark-kicker); }
+.mt-ref__object code { font-family: var(--font-mono); color: var(--on-dark); margin-top: 10px; }
+
+/* ── Вложенные области (LEGB) ──────────────────────────── */
+.mt-nest { border-radius: var(--radius-panel); padding: 16px 28px 28px; background: var(--brand-primary); color: var(--on-dark); }
+.mt-nest .mt-nest { padding: 14px 24px 24px; margin-top: 12px; border-radius: var(--radius-code); background: var(--purple-700); }
+.mt-nest .mt-nest .mt-nest { border-radius: var(--radius-row); background: var(--purple-400); color: var(--purple-950); }
+.mt-nest .mt-nest .mt-nest .mt-nest { border-radius: var(--radius-box); background: var(--card-bg); color: var(--heading); padding: 20px 24px; }
+.mt-nest__head { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; }
+.mt-nest__head code { font-family: var(--font-mono); font-size: 26px; }
+
+/* ── Список с буквенными бейджами (L E G B) ────────────── */
+.mt-tiles { display: flex; flex-direction: column; gap: var(--gap-stack); }
+.mt-tile { display: flex; gap: 30px; align-items: center; background: var(--card-bg); border-radius: var(--radius-code); padding: 20px 32px; min-height: 120px; }
+.mt-tile b { display: block; color: var(--heading); font-family: var(--font-mono); font-weight: 600; }

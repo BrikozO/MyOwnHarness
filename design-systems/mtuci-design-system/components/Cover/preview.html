@@ -1,0 +1,36 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Cover</title>
+<style>
+  html,body{margin:0}
+  .cv{position:relative;width:960px;height:288px;background:var(--slide-bg);overflow:hidden;font-family:var(--font-sans)}
+  .cv svg{position:absolute;inset:0}
+  .brand{fill:var(--brand-primary)} .deep{fill:var(--purple-950)} .tint{fill:var(--card-bg)} .mid{fill:var(--purple-400)} .warm{fill:var(--chart-12)}
+  .hex{fill:none;stroke:var(--white);stroke-width:8;stroke-linejoin:round}
+  .r-card{rx:var(--radius-card)} .r-code{rx:var(--radius-code)} .r-row{rx:var(--radius-row)}
+  .name{position:absolute;left:40px;bottom:72px;width:440px;margin:0;color:var(--heading);font-weight:800;font-size:58px;line-height:.95;letter-spacing:-.01em}
+  .tag{position:absolute;left:40px;bottom:40px;width:440px;margin:0;color:var(--eyebrow);font-weight:600;font-size:14px;line-height:20px}
+</style></head>
+<body>
+<div class="cv">
+  <svg viewBox="0 0 960 288" width="960" height="288" aria-hidden="true">
+    <!-- blocks: brand-primary slab 400×208 bleeding top/right; purple-950 (code-bg) 216×120 bleeding bottom; card-bg 120×88; purple-400 64×64; chart-12 32×32 (code-keyword)
+         arrangement: one tall slab with satellites, like a dark cover slide with a code block and a card beside it
+         pattern: literal motif — the heptagon sign of the MTUCI logo as a chain bleeding off the corner, as on the template's hex corners; white on brand
+         scales: gaps gap-grid 32 / gap-stack 20; radii radius-card 28, radius-code 24, radius-row 20; hex stroke 8 -->
+    <rect class="brand r-card" x="560" y="-28" width="428" height="236"/>
+    <rect class="deep r-code" x="616" y="228" width="216" height="88"/>
+    <rect class="tint r-card" x="480" y="228" width="116" height="88"/>
+    <rect class="mid r-row" x="852" y="228" width="64" height="64"/>
+    <rect class="warm" x="640" y="252" width="32" height="8" rx="4"/>
+    <polygon class="hex" points="764.0,84.2 792.0,101.5 796.0,134.3 772.8,157.8 740.0,154.3 722.3,126.5 732.9,95.3"/>
+    <polygon class="hex" points="837.7,43.9 861.6,66.6 858.6,99.5 831.1,117.7 799.7,107.5 788.2,76.6 805.1,48.3"/>
+    <polygon class="hex" points="911.0,5.1 929.6,32.3 919.9,63.8 889.2,75.9 860.6,59.4 855.7,26.8 878.1,2.6"/>
+    <polygon class="hex" points="965.9,-41.2 992.0,-21.0 992.5,12.0 967.0,32.9 934.8,26.1 920.0,-3.4 933.9,-33.4"/>
+  </svg>
+  <p class="name">Презентации МТУСИ</p>
+  <p class="tag">Слайды занятий: Montserrat, #372579 и код на тёмном</p>
+</div>
+</body>
+</html>

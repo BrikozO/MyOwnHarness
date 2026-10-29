@@ -1,0 +1,33 @@
+<!-- @dsCard group="Слайды" width=1920 height=1080 subtitle="Каркас контентного слайда" -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>ContentSlide</title></head>
+<body>
+<section class="mt-slide">
+  <header class="mt-head">
+    <p class="mt-eyebrow eyebrow">Проект «Контакты»</p>
+    <h2 class="mt-title slide-title">Где мы остановились</h2>
+  </header>
+  <div class="mt-body mt-body--code mt-split mt-split--code">
+    <pre class="mt-code code-sm" style="min-height:680px">book = {}
+groups = {<span class="s">"друзья"</span>: set(), <span class="s">"работа"</span>: set()}
+<span class="k">while</span> <span class="k">True</span>:
+    cmd = input(<span class="s">"Команда: "</span>).strip().lower()
+    <span class="k">if</span> cmd == <span class="s">"выход"</span>:
+        <span class="k">break</span>
+    <span class="k">elif</span> cmd == <span class="s">"добавить"</span>:
+        name = input(<span class="s">"Имя: "</span>).strip()
+        phone = input(<span class="s">"Телефон: "</span>).strip()
+        <span class="c"># ...ещё 8 строк про группы</span>
+    <span class="k">elif</span> cmd == <span class="s">"найти"</span>:
+        <span class="c"># ...</span></pre>
+    <div class="mt-stack" style="gap:44px;padding-top:14px">
+      <div><p class="mt-term__title card-title">× 40 строк в одном цикле</p><p class="mt-term__text body-sm">чтобы понять команду, читаем весь while</p></div>
+      <div><p class="mt-term__title card-title">× input().strip() — в каждой ветке</p><p class="mt-term__text body-sm">одна и та же строка повторяется 8 раз</p></div>
+      <div class="mt-callout"><p class="mt-callout__title card-title">Сегодня: функции</p><p class="mt-callout__text body-sm">у каждой команды — имя, входные данные и результат</p></div>
+    </div>
+  </div>
+  <footer class="mt-footer footer"><span>МТУСИ · Python · Занятие 5</span><span>3</span></footer>
+</section>
+</body>
+</html>

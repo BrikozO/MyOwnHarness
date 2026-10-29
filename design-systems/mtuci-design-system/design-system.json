@@ -1,0 +1,464 @@
+{
+ "v": 3,
+ "assetGroups": {
+  "Icons": {
+   "files": {
+    "icon-ai-monitor.png": {
+     "blob": "4f7ee000324160aa6e049b289d7525b8",
+     "name": "icon-ai-monitor.png",
+     "size": 83648,
+     "type": "image/png"
+    },
+    "icon-analytics-docs-white.svg": {
+     "blob": "70a74250c43ec17e89a1fd23f5f3f072",
+     "name": "icon-analytics-docs-white.svg",
+     "size": 3383,
+     "type": "image/svg+xml"
+    },
+    "icon-briefcase.svg": {
+     "blob": "f76aea5a053264c7684501957b800b18",
+     "name": "icon-briefcase.svg",
+     "size": 5588,
+     "type": "image/svg+xml"
+    },
+    "icon-checklist.svg": {
+     "blob": "768dafa11762908ee5ff9f96c8b886a6",
+     "name": "icon-checklist.svg",
+     "size": 2127,
+     "type": "image/svg+xml"
+    },
+    "icon-computer.svg": {
+     "blob": "7de5059b9e76ccb01516049af58271fc",
+     "name": "icon-computer.svg",
+     "size": 5235,
+     "type": "image/svg+xml"
+    },
+    "icon-discord.svg": {
+     "blob": "c44504470037b9732b9fb2fc187c3e88",
+     "name": "icon-discord.svg",
+     "size": 3405,
+     "type": "image/svg+xml"
+    },
+    "icon-document.svg": {
+     "blob": "72402d8a60c57328c930684ea2fba4b7",
+     "name": "icon-document.svg",
+     "size": 3056,
+     "type": "image/svg+xml"
+    },
+    "icon-dormitory.svg": {
+     "blob": "e9130a42dbf5e508956cd51206044d67",
+     "name": "icon-dormitory.svg",
+     "size": 8561,
+     "type": "image/svg+xml"
+    },
+    "icon-dzen.svg": {
+     "blob": "bc2a3094d5c4e9dde51be166b52dda1a",
+     "name": "icon-dzen.svg",
+     "size": 1886,
+     "type": "image/svg+xml"
+    },
+    "icon-first-place.svg": {
+     "blob": "12e6e46d87eb89646177b66dcf1286d5",
+     "name": "icon-first-place.svg",
+     "size": 1041,
+     "type": "image/svg+xml"
+    },
+    "icon-folder-docs-white.svg": {
+     "blob": "0b2022f3d833ad47f2ae47780d9c0f78",
+     "name": "icon-folder-docs-white.svg",
+     "size": 1735,
+     "type": "image/svg+xml"
+    },
+    "icon-graduate.png": {
+     "blob": "f82e35873bf8e0a45100a3c65e42c5ab",
+     "name": "icon-graduate.png",
+     "size": 49724,
+     "type": "image/png"
+    },
+    "icon-graduation-cap.svg": {
+     "blob": "7d28733d58989efa365a2cc453e78e16",
+     "name": "icon-graduation-cap.svg",
+     "size": 2597,
+     "type": "image/svg+xml"
+    },
+    "icon-handshake.svg": {
+     "blob": "c744446f98e28b4c93e39b0259c3131e",
+     "name": "icon-handshake.svg",
+     "size": 15145,
+     "type": "image/svg+xml"
+    },
+    "icon-id-badge.svg": {
+     "blob": "a71b9d792debc2ae00353debc7248996",
+     "name": "icon-id-badge.svg",
+     "size": 3558,
+     "type": "image/svg+xml"
+    },
+    "icon-idea.svg": {
+     "blob": "743fb184032d8e72f668f71bb2388700",
+     "name": "icon-idea.svg",
+     "size": 8207,
+     "type": "image/svg+xml"
+    },
+    "icon-location.svg": {
+     "blob": "dd20ffa2c07facd26d6998be5723ee6b",
+     "name": "icon-location.svg",
+     "size": 1426,
+     "type": "image/svg+xml"
+    },
+    "icon-lock-open.svg": {
+     "blob": "a798f887a055f34fd368bdd86f21b2d3",
+     "name": "icon-lock-open.svg",
+     "size": 1277,
+     "type": "image/svg+xml"
+    },
+    "icon-lock.svg": {
+     "blob": "ade91889fb6dee3a0a2ccd660b407418",
+     "name": "icon-lock.svg",
+     "size": 1333,
+     "type": "image/svg+xml"
+    },
+    "icon-mail.svg": {
+     "blob": "434eae62059274cf49c6f6f60abb3e34",
+     "name": "icon-mail.svg",
+     "size": 1984,
+     "type": "image/svg+xml"
+    },
+    "icon-odnoklassniki.svg": {
+     "blob": "0fc3ade904b7121d62354ffd647b0555",
+     "name": "icon-odnoklassniki.svg",
+     "size": 2384,
+     "type": "image/svg+xml"
+    },
+    "icon-people.svg": {
+     "blob": "7b2c959afc1fa2c407d7f033e2511e8b",
+     "name": "icon-people.svg",
+     "size": 1056,
+     "type": "image/svg+xml"
+    },
+    "icon-person-check.svg": {
+     "blob": "2557c7901335f6d77f145674c9582825",
+     "name": "icon-person-check.svg",
+     "size": 744,
+     "type": "image/svg+xml"
+    },
+    "icon-phone.svg": {
+     "blob": "048dd4a21ef5ddbe9a3438049881a6a3",
+     "name": "icon-phone.svg",
+     "size": 1900,
+     "type": "image/svg+xml"
+    },
+    "icon-professor.png": {
+     "blob": "a1d710e9ad1e24771d5ccce78631c57b",
+     "name": "icon-professor.png",
+     "size": 109334,
+     "type": "image/png"
+    },
+    "icon-report-white.svg": {
+     "blob": "9c671cb0843c7f7c1026932bc16bd2ff",
+     "name": "icon-report-white.svg",
+     "size": 2374,
+     "type": "image/svg+xml"
+    },
+    "icon-research-white.svg": {
+     "blob": "2dad70b1a7248e3948e75dfd51bbc1b6",
+     "name": "icon-research-white.svg",
+     "size": 3106,
+     "type": "image/svg+xml"
+    },
+    "icon-search-person.svg": {
+     "blob": "3f189a4997bbc39b67f7c03a1a453fae",
+     "name": "icon-search-person.svg",
+     "size": 954,
+     "type": "image/svg+xml"
+    },
+    "icon-security-monitor.svg": {
+     "blob": "2afc29d0482fa5794875831b02f79ff1",
+     "name": "icon-security-monitor.svg",
+     "size": 3901,
+     "type": "image/svg+xml"
+    },
+    "icon-teacher.svg": {
+     "blob": "c6c458988c634197326d62fdcc444d4f",
+     "name": "icon-teacher.svg",
+     "size": 7970,
+     "type": "image/svg+xml"
+    },
+    "icon-telegram.svg": {
+     "blob": "2b757d98a2fa6703d99d03c02d112a17",
+     "name": "icon-telegram.svg",
+     "size": 1221,
+     "type": "image/svg+xml"
+    },
+    "icon-thumbs-up.png": {
+     "blob": "a2f8e3e93b53ba3d49a3811b4bd99f51",
+     "name": "icon-thumbs-up.png",
+     "size": 29653,
+     "type": "image/png"
+    },
+    "icon-trophy.png": {
+     "blob": "25a0a935b56350184e37afcc75171028",
+     "name": "icon-trophy.png",
+     "size": 20740,
+     "type": "image/png"
+    },
+    "icon-university.svg": {
+     "blob": "3a58427e339048f28e7e34b853db9ba9",
+     "name": "icon-university.svg",
+     "size": 4479,
+     "type": "image/svg+xml"
+    },
+    "icon-vk.svg": {
+     "blob": "63c665f49495ecad6f39d759298d769c",
+     "name": "icon-vk.svg",
+     "size": 4196,
+     "type": "image/svg+xml"
+    },
+    "icon-vr.svg": {
+     "blob": "de452f3255fe1d5d6c394fe5bb096e33",
+     "name": "icon-vr.svg",
+     "size": 12218,
+     "type": "image/svg+xml"
+    }
+   },
+   "name": "Icons",
+   "order": [
+    "icon-ai-monitor.png",
+    "icon-analytics-docs-white.svg",
+    "icon-briefcase.svg",
+    "icon-checklist.svg",
+    "icon-computer.svg",
+    "icon-discord.svg",
+    "icon-document.svg",
+    "icon-dormitory.svg",
+    "icon-dzen.svg",
+    "icon-first-place.svg",
+    "icon-folder-docs-white.svg",
+    "icon-graduate.png",
+    "icon-graduation-cap.svg",
+    "icon-handshake.svg",
+    "icon-id-badge.svg",
+    "icon-idea.svg",
+    "icon-location.svg",
+    "icon-lock-open.svg",
+    "icon-lock.svg",
+    "icon-mail.svg",
+    "icon-odnoklassniki.svg",
+    "icon-people.svg",
+    "icon-person-check.svg",
+    "icon-phone.svg",
+    "icon-professor.png",
+    "icon-report-white.svg",
+    "icon-research-white.svg",
+    "icon-search-person.svg",
+    "icon-security-monitor.svg",
+    "icon-teacher.svg",
+    "icon-telegram.svg",
+    "icon-thumbs-up.png",
+    "icon-trophy.png",
+    "icon-university.svg",
+    "icon-vk.svg",
+    "icon-vr.svg"
+   ],
+   "tile": "s"
+  },
+  "Illustrations": {
+   "files": {
+    "ill-browser.svg": {
+     "blob": "d2e559acb65890eb946d598a5c4083e4",
+     "name": "ill-browser.svg",
+     "size": 21618,
+     "type": "image/svg+xml"
+    },
+    "ill-coding.svg": {
+     "blob": "c9cdd5df4b9950e7f8103fcbe3753c0c",
+     "name": "ill-coding.svg",
+     "size": 22830,
+     "type": "image/svg+xml"
+    },
+    "ill-desk.svg": {
+     "blob": "9aa853f19b0546d68f687fe4da1980aa",
+     "name": "ill-desk.svg",
+     "size": 27805,
+     "type": "image/svg+xml"
+    },
+    "ill-energy.svg": {
+     "blob": "acd871fcc5c769d23460c930458bc243",
+     "name": "ill-energy.svg",
+     "size": 17131,
+     "type": "image/svg+xml"
+    },
+    "ill-messaging.svg": {
+     "blob": "346f4e31b1aa9b6b2fd98c07285b6ebd",
+     "name": "ill-messaging.svg",
+     "size": 30676,
+     "type": "image/svg+xml"
+    },
+    "ill-network.svg": {
+     "blob": "b2b5e55853b25711fd024e3654f75fe8",
+     "name": "ill-network.svg",
+     "size": 14376,
+     "type": "image/svg+xml"
+    },
+    "ill-sofa.svg": {
+     "blob": "bb9cf37d507ad57aca0479cdbe175788",
+     "name": "ill-sofa.svg",
+     "size": 26716,
+     "type": "image/svg+xml"
+    },
+    "ill-videocall.svg": {
+     "blob": "59ff3865f59fd79b0ab1e72aedc0cd0a",
+     "name": "ill-videocall.svg",
+     "size": 39091,
+     "type": "image/svg+xml"
+    }
+   },
+   "name": "Illustrations",
+   "order": [
+    "ill-browser.svg",
+    "ill-coding.svg",
+    "ill-desk.svg",
+    "ill-energy.svg",
+    "ill-messaging.svg",
+    "ill-network.svg",
+    "ill-sofa.svg",
+    "ill-videocall.svg"
+   ],
+   "tile": "m"
+  },
+  "Logos": {
+   "files": {
+    "mtuci-logo-en-primary.svg": {
+     "blob": "ccf49413ef435bde133e54ce8a824cd3",
+     "name": "mtuci-logo-en-primary.svg",
+     "size": 6514,
+     "type": "image/svg+xml"
+    },
+    "mtuci-logo-full-primary.png": {
+     "blob": "9d0968e7a9b8c00fb78fbce918d54ff8",
+     "name": "mtuci-logo-full-primary.png",
+     "size": 29965,
+     "type": "image/png"
+    },
+    "mtuci-logo-ru-primary.svg": {
+     "blob": "5531e70ca4c0956a526c90370463aa25",
+     "name": "mtuci-logo-ru-primary.svg",
+     "size": 8746,
+     "type": "image/svg+xml"
+    },
+    "mtuci-logo-ru-white.svg": {
+     "blob": "3a3ff4e8c69e29624d44e96f930d5a50",
+     "name": "mtuci-logo-ru-white.svg",
+     "size": 8615,
+     "type": "image/svg+xml"
+    }
+   },
+   "name": "Logos",
+   "order": [
+    "mtuci-logo-ru-primary.svg",
+    "mtuci-logo-ru-white.svg",
+    "mtuci-logo-en-primary.svg",
+    "mtuci-logo-full-primary.png"
+   ],
+   "tile": "l"
+  },
+  "Pattern": {
+   "files": {
+    "campus-building-line.png": {
+     "blob": "e07da38bf73c77c328f12130b32feff6",
+     "name": "campus-building-line.png",
+     "size": 436641,
+     "type": "image/png"
+    },
+    "hex-corner-primary.svg": {
+     "blob": "f6b793673713f955154f9ea909ca0d7f",
+     "name": "hex-corner-primary.svg",
+     "size": 5617,
+     "type": "image/svg+xml"
+    },
+    "hex-corner-white.svg": {
+     "blob": "c85d0ab631e797fe388d66c11d174b19",
+     "name": "hex-corner-white.svg",
+     "size": 5808,
+     "type": "image/svg+xml"
+    }
+   },
+   "name": "Pattern",
+   "order": [
+    "hex-corner-primary.svg",
+    "hex-corner-white.svg",
+    "campus-building-line.png"
+   ],
+   "tile": "l"
+  },
+  "Photos": {
+   "files": {
+    "photo-classroom-laptops.jpg": {
+     "blob": "8bd7024527c47e93697bf219b0c3780c",
+     "name": "photo-classroom-laptops.jpg",
+     "size": 211497,
+     "type": "image/jpeg"
+    },
+    "photo-lab-practice.jpg": {
+     "blob": "d549d1b87962f9f2824512ecd98c81f8",
+     "name": "photo-lab-practice.jpg",
+     "size": 262839,
+     "type": "image/jpeg"
+    },
+    "photo-lecture-hall.jpg": {
+     "blob": "ebc6c813fe0513dd773af3b646205f56",
+     "name": "photo-lecture-hall.jpg",
+     "size": 206817,
+     "type": "image/jpeg"
+    },
+    "photo-student-portrait.jpg": {
+     "blob": "0bb389a51c776712186c87f05f72d220",
+     "name": "photo-student-portrait.jpg",
+     "size": 325732,
+     "type": "image/jpeg"
+    },
+    "photo-students-group.jpg": {
+     "blob": "64e4c6f9060e40ccb0822e1403482917",
+     "name": "photo-students-group.jpg",
+     "size": 180828,
+     "type": "image/jpeg"
+    }
+   },
+   "name": "Photos",
+   "order": [
+    "photo-classroom-laptops.jpg",
+    "photo-lab-practice.jpg",
+    "photo-lecture-hall.jpg",
+    "photo-student-portrait.jpg",
+    "photo-students-group.jpg"
+   ],
+   "tile": "l"
+  }
+ },
+ "blobs": {},
+ "createdOnFiles": {
+  "at": "2026-10-24T09:59:47Z",
+  "v": 1
+ },
+ "docs": {
+  "readme": "project/README.md",
+  "sections": []
+ },
+ "groups": [
+  "Logos",
+  "Pattern",
+  "Illustrations",
+  "Icons",
+  "Photos"
+ ],
+ "lastChange": {
+  "by": "Claude",
+  "at": "2026-10-24T10:02:23Z",
+  "via": "Claude",
+  "note": "Добавлен components/bundle.js (подсветка Python), чтобы превью работали"
+ },
+ "layout": "files",
+ "libraries": [],
+ "namespace": "MtuciSlides",
+ "sections": {},
+ "title": "Презентации МТУСИ"
+}
