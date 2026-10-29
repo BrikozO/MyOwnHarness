@@ -1,0 +1,8 @@
+{
+  "name": "lofi-plan",
+  "version": "0.2.0",
+  "description": "A lo-fi progress bar under the prompt that follows how Claude forms a plan, then the steps as they get done.",
+  "author": { "name": "o.yakushev" },
+  "license": "MIT",
+  "types": "./types/index.d.ts"
+}

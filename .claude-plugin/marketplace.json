@@ -11,6 +11,16 @@
       "name": "my-own-harness",
       "source": "./",
       "description": "Скиллы write-db-doc, commit-push-task и release-tag"
+    },
+    {
+      "name": "lofi-plan",
+      "source": "./mods/lofi-plan",
+      "description": "Прогресс-бар под полем ввода: этапы формирования плана, затем выполненные шаги"
+    },
+    {
+      "name": "lofi-usage",
+      "source": "./mods/lofi-usage",
+      "description": "Полоса над полем ввода: заполнение контекста и лимиты 5h/7d со временем до сброса"
     }
   ]
 }

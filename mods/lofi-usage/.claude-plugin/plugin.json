@@ -1,0 +1,10 @@
+{
+  "name": "lofi-usage",
+  "version": "0.2.0",
+  "description": "A lo-fi band above the prompt: context fill and the 5h and 7d rate limits with their resets.",
+  "author": {
+    "name": "o.yakushev"
+  },
+  "license": "MIT",
+  "types": "./types/index.d.ts"
+}

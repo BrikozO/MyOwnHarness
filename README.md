@@ -18,16 +18,27 @@
 
 Источник — артефакт Design System в claude.ai: https://claude.ai/artifact/33g7qF5udKMJkMVT78orbv.
 
+## Моды
+
+Отдельные плагины с хуками и UI поверх интерфейса Claude Code. Ставятся независимо от скиллов.
+
+| Мод | Что делает |
+|---|---|
+| [`lofi-plan`](mods/lofi-plan/README.md) | Прогресс-бар под полем ввода: этапы формирования плана, затем выполненные шаги |
+| [`lofi-usage`](mods/lofi-usage/README.md) | Полоса над полем ввода: заполнение контекста и лимиты 5h/7d со временем до сброса |
+
 ## Структура
 
 ```
 .claude-plugin/
-  plugin.json        # манифест плагина
-  marketplace.json   # манифест маркетплейса (плагин — корень репо)
+  plugin.json        # манифест плагина со скиллами
+  marketplace.json   # манифест маркетплейса: скиллы (корень репо) и моды
 skills/
   <skill-name>/SKILL.md
 design-systems/
   <system-name>/     # README, tokens.css/json, fonts, components
+mods/
+  <mod-name>/        # .claude-plugin/plugin.json, hooks/, types/
 ```
 
 ## Установка в Claude Code
@@ -35,6 +46,8 @@ design-systems/
 ```
 /plugin marketplace add BrikozO/MyOwnHarness
 /plugin install my-own-harness@my-own-harness
+/plugin install lofi-plan@my-own-harness
+/plugin install lofi-usage@my-own-harness
 ```
 
 ## Скиллы в claude.ai
