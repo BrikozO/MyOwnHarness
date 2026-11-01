@@ -23,7 +23,7 @@
 
 ## Установка
 
-Мод входит в маркетплейс [MyOwnHarness](../../README.md):
+Мод входит в маркетплейс [MyOwnHarness](../../../README.md):
 
 ```
 /plugin marketplace add BrikozO/MyOwnHarness

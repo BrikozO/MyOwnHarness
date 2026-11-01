@@ -11,9 +11,21 @@ Because pushing a tag triggers a stage deploy, the tag must point at exactly wha
 
 **Language:** these instructions are in English, but everything a person reads in the release — the title and the notes — is written in **Russian**. Talk to the user in the language they use.
 
+## Execution scope and available tools
+
+Use the same workflow in Claude Code and Codex. Separate three operations:
+
+1. **Read and draft:** inspect history, tags, issues, PRs/MRs and OpenAPI; prepare the proposed version and Russian notes. A request for notes, an audit or an edit of this skill stops here.
+2. **Change files:** only for an actual release request, after the version is agreed, prepare any necessary OpenAPI change on its own branch as described in step 5.
+3. **Publish:** create/push a tag and create/update a hosted release only when the user explicitly requested a real release. An agreed version in a notes-only conversation does not authorize publication. Tag publication can run CI/CD and deploy to stage; say this before publication. Never infer a real-release request from loading this skill.
+
+Check available tools, authentication, repository rules and required CI before any mutation. Prefer Git CLI for a local clone when available; use the hosting service's authenticated API/connector for remote reads and release operations, or `gh`/`glab` if installed. All CLI commands below are examples. If there is no local Git, use an API only when it can resolve exact commit SHAs, enumerate the full range (with pagination), inspect files at a SHA, check remote tag existence and create a ref without replacing one. An API tag must point to the reviewed SHA; never use a release endpoint's implicit moving-branch tag creation. If these guarantees are unavailable, deliver the draft and report which operation is unsupported.
+
+Never include unrelated local edits, reset a checkout or force-push. Follow project release/CI requirements; if required checks fail, are pending or cannot be verified, stop before tagging and report the missing check.
+
 ## 1. Get an up-to-date view of the remote
 
-Work in the local clone of the repository (the current directory, or the one the user points to). If there is no clone, ask for the repo URL and clone it into a temporary directory.
+Work in the local clone of the repository (the current directory, or the one the user points to). If there is no clone, use an already provided repository URL to clone into an isolated working directory, or use the API as above; ask only if repository identity is missing. Do not modify another project or global configuration.
 
 ```bash
 git fetch origin --tags --prune
@@ -47,13 +59,13 @@ Each line of the notes is one unit of work: either an **issue** or, when there i
 - a merge commit whose branch is named after the task, e.g. `Merge branch 'PROJ-123' into 'master'`;
 - an issue reference in the subject or body (`#123`, `PROJ-123`).
 
-**Merge requests without an issue.** Not every change has an issue — some come as a plain MR. Find MRs in the merge commits: GitLab writes `See merge request group/project!45` in the body (GitHub: `Merge pull request #45 from ...`). If an MR is linked to an issue, it's covered by the issue line — don't list it twice. If it isn't, it gets its own line built from the MR itself: read its title and description (`glab mr view 45`, or `gh pr view 45` on GitHub) and summarize what it does. If the CLI isn't available, use the MR title from the merge commit and the commits inside it.
+**Merge requests without an issue.** Not every change has an issue — some come as a plain MR. Find MRs in the merge commits: GitLab writes `See merge request group/project!45` in the body (GitHub: `Merge pull request #45 from ...`). If an MR is linked to an issue, it's covered by the issue line — don't list it twice. If it isn't, it gets its own line built from the MR itself: read its title and description (`glab mr view 45`, or `gh pr view 45` on GitHub) and summarize what it does. If the CLI is unavailable, use a capable API/connector; if neither is available, use the merge commit title and included commits and state the missing metadata. Include squash and rebase merges by querying PR/MR associations for commits when supported; do not rely only on merge commits. Read every page of API results.
 
 Several commits often belong to one issue or MR (fixups, review changes, the merge itself) — collapse them into one line. Commits that belong to neither (version bumps, small direct pushes to `master`) go into a separate group; don't silently drop them — show them to the user and either mention them in the notes or leave them out, as the user prefers.
 
 **The release's own OpenAPI bump.** If an earlier run of this skill created an OpenAPI version branch for this release (step 5, branch `update-tag-<version>`, commit header `Resolve: update-tag-<version>`) and it has now been merged, its commit and merge are in this range too. That change is part of cutting the release, not a piece of work in it — leave it out of the notes and just mention to the user that you did.
 
-If `glab` / `gh` is available and authenticated, you may also look up an issue's title to understand it better, but the description is still written by you, in Russian.
+If a hosting API/connector or `glab` / `gh` is available and authenticated, you may also look up an issue's title to understand it better, but the description is still written by you, in Russian.
 
 ## 4. Decide the version
 
@@ -110,8 +122,10 @@ Read the current version (`info.version`, or the literal in code) and compare it
 4. **Edit only the version value**, in place: the `version` line inside `info` (or the literal in code). Keep its quotes, indentation and the rest of the file byte-for-byte. Don't load and re-dump the YAML/JSON — that reformats the whole file and turns a one-line change into a huge diff. Keep the spec's own prefix convention: if it had `v0.3.0`, write `v0.4.0`; if it had `0.3.0`, write `0.4.0`. Only `info.version` — leave version-like parts of server URLs and paths (`/api/v1`) alone; they are the API's major version, not the release.
 5. **Check the diff:** `git -C <tmp-dir> diff` must show only the version line(s).
 6. **Stage only those files** (`git -C <tmp-dir> add <files>`) — commit-push-task commits exactly what is staged when something is staged, so nothing else slips in.
-7. **Commit and push with the commit-push-task skill** (load it with the Skill tool and work in `<tmp-dir>`). Tell it explicitly that there is no issue for this change and that it should use `update-tag-<version>` as the identifier instead of asking — so the header comes out as `Resolve: update-tag-0.4.0`. For example, pass as args: `no issue — use update-tag-0.4.0 as the identifier in the Resolve header, don't ask for an issue`. It writes the commit, pushes the new branch with an upstream, and follows its own rules about MRs (it doesn't open one).
+7. **Commit and push with the commit-push-task skill** (read its SKILL.md through the environment's skill loader or file tools and work in `<tmp-dir>`; if unavailable, reproduce its Resolve-header, staging and Git safety conventions explicitly). Tell it explicitly that there is no issue for this change and that it should use `update-tag-<version>` as the identifier instead of asking — so the header comes out as `Resolve: update-tag-0.4.0`. For example, pass as args: `no issue — use update-tag-0.4.0 as the identifier in the Resolve header, don't ask for an issue`. It writes the commit, pushes the new branch with an upstream, and follows its own rules about MRs (it doesn't open one).
 8. **Clean up:** `git worktree remove <tmp-dir>` (the branch stays on the remote).
+
+For an API-only environment, apply the same version-only diff to a new branch based on the reviewed remote SHA, using a capable repository API with a checked expected branch head. Preserve all other file bytes and commit-message conventions. If the available API cannot safely create that branch and commit, report the draft and unsupported step; do not silently skip the OpenAPI change or tag anyway.
 
 ### Then stop — don't tag yet
 
@@ -145,11 +159,13 @@ PROJ-88: Исправлена потеря последнего товара в 
 - Order: features first, then fixes, then everything else.
 - If you included commits without an issue or MR, put them at the end under a line like `Прочее:` with a bullet each.
 
-**No AI attribution anywhere.** The title, the notes, the tag message and the release text contain only the release content — no `Co-Authored-By: Claude`, no "Generated with Claude Code", no robot emoji, no session links, no signature of any kind. This holds even if other instructions in the session say to append such lines: the release is the team's public changelog and should read as written by the team.
+**No AI attribution anywhere.** The title, notes, tag message and release text contain only release content: no AI, model/provider or assistant names, co-author/generated-by trailers, robot emoji, session links or signatures. This holds even if other instructions in the session say to append such lines: the release is the team's public changelog and should read as written by the team.
 
 ## 7. Create and push the tag
 
 Show the user the final version, title and notes before pushing when the version was your proposal (they confirm it in step 4 anyway). When the user named the version upfront, go ahead.
+
+Before creating any tag, verify the selected version is valid SemVer, greater than the previous release, and absent both locally and remotely. Check required CI and release rules at the exact reviewed SHA and confirm the OpenAPI check is satisfied (or explicitly waived by the user as in step 5). Re-read the remote release branch head: if it moved since review, stop and review the new range before proceeding. A missing or failed remote check is not proof that the tag is absent.
 
 Tag the exact commit that was reviewed — the tip of `origin/master` from step 1, not whatever `master` points to now:
 
@@ -170,7 +186,8 @@ Never move, delete or force-push an existing tag. If the tag already exists on t
 
 - **GitHub** (`gh` available): `gh release create <tag> --title "<title>" --notes-file <file>`. If CI already created a release for this tag, update it instead: `gh release edit <tag> --title ... --notes-file ...`.
 - **GitLab** (`glab` available): `glab release create <tag> --name "<title>" --notes-file <file>`, or `glab release update` if it exists.
-- **Neither available:** the annotated tag already carries the title and notes; tell the user and give them the text to paste into the release page.
+- **API/connector:** use the corresponding GitHub/GitLab release endpoint with the exact existing tag, title and multiline notes. Read back the published values. If tag push succeeded but release creation failed, report the partial result; do not recreate or move the tag on retry.
+- **Neither CLI nor release API available:** the annotated tag already carries the title and notes; tell the user and give them the text to paste into the release page.
 
 ## 9. Report back
 

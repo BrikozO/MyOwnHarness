@@ -1,0 +1,18 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "my-own-harness",
+  "version": "0.1.0",
+  "description": "Личный набор скиллов: документация БД по ГОСТ, коммиты по задачам, сборка релизов",
+  "author": {
+    "name": "Oleg Yakushev"
+  },
+  "repository": "https://github.com/BrikozO/MyOwnHarness",
+  "license": "UNLICENSED",
+  "keywords": [
+    "skills",
+    "git",
+    "release",
+    "database",
+    "gost"
+  ]
+}

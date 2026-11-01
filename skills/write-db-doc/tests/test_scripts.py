@@ -17,11 +17,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SCRIPTS = ROOT / 'scripts'
-EVALS = ROOT / 'evals'
+FIXTURES = Path(__file__).resolve().parent / 'fixtures'
 
-CRM = (EVALS / 'crm-postgres-full-document' / 'files' / 'schema.sql').read_text(encoding='utf-8')
-SHOP = (EVALS / 'mysql-fk-type-mismatch' / 'files' / 'shop.sql').read_text(encoding='utf-8')
-MIGRATIONS = EVALS / 'trigger-plain-request' / 'files' / 'migrations'
+CRM = (FIXTURES / 'crm.sql').read_text(encoding='utf-8')
+SHOP = (FIXTURES / 'shop.sql').read_text(encoding='utf-8')
+MIGRATIONS = FIXTURES / 'migrations'
 
 
 def run(script, *args, check=True):

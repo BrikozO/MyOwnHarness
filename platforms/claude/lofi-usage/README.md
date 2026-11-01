@@ -15,7 +15,7 @@ ctx ━━━─────── 34% 68k/200k  ·  5h ━━──────
 
 ## Установка
 
-Мод входит в маркетплейс [MyOwnHarness](../../README.md):
+Мод входит в маркетплейс [MyOwnHarness](../../../README.md):
 
 ```
 /plugin marketplace add BrikozO/MyOwnHarness
