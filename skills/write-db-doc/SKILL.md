@@ -30,20 +30,22 @@ Scripts (Python 3; the parser and checks need only the standard library):
 | `scripts/lint_style.py` | finds Russian stop words and long sentences |
 | `scripts/check_coverage.py` | checks the draft against the model: every table and column described, no references to non-existent columns, a diagram embedded |
 
+Use this workflow in Claude Code or Codex with the available file, shell, image and document tools. Resolve bundled resources relative to this SKILL.md, never relative to a hard-coded installation folder. Check for a Python 3 interpreter before executing scripts; `python3` below is an example and may need replacing with the available interpreter. If local execution or file access is unavailable, use a supported workspace/runtime that can run the bundled scripts; otherwise report which parsing, rendering and validation steps could not run, and never claim they passed. Keep the same Russian document structure and output format.
+
 In the commands below `$SKILL_DIR` is the folder this SKILL.md lives in; substitute the absolute path (the scripts are not on PATH and the working directory is usually elsewhere). Two kinds of files come out of the run. Deliverables — the document and the diagrams it embeds (PNG, plus SVG) — go wherever the document goes. Intermediates — `model.json`, `summary.md`, `labels.json`, the draft — stay in the scratch/working folder, not in the user's folders, unless the user asks for them.
 
-Before the first render, make sure PNG export works: `python3 -c "import cairosvg"` or `which rsvg-convert`; if neither, `pip install --break-system-packages cairosvg`. Without it only SVG is produced, and most document editors and wikis embed PNG.
+Before the first render, check PNG support with the selected interpreter (`python3 -c "import cairosvg"`) or the available-command lookup for `rsvg-convert`. If neither is available and dependency installation is supported, use a project or temporary virtual environment (`python3 -m venv <scratch>/venv`, then its interpreter with `-m pip install cairosvg`); do not modify system Python. If installation is unavailable or fails, deliver SVG and state that PNG could not be produced.
 
 ## Process
 
 ### 0. Decide what and where
 
 - **Which document.** By default «Описание базы данных» per п. 8.9, with logical and physical structure. If asked for «описание организации информационной базы» or «только логическая структура для техпроекта», see the variants in `gost-structure.md`.
-- **Where it goes.** This skill decides the content; the environment decides the container. Follow whatever the environment's own rules say about documents and files, and only add this:
+- **Where it goes.** This skill decides the content; the environment decides the container. Use the current environment's supported document-creation mechanism and document/format skills when available, following its rules about document creation order, files and attachments. Do not require one vendor's document tool or hard-coded output folder. Preserve the GOST-based section structure and the user's chosen destination and format, and only add this:
   - The user named a wiki or tracker (Confluence, Notion, Outline, YouTrack, GitLab/GitHub wiki) — publish there through its tool if one is available; if the space or parent page is not given, ask. If no tool can reach it, produce the document in the default way and say what would let you publish it.
   - The user named a file format (Markdown, .docx) — produce that file.
   - In a code repository with a `docs/` folder or similar — a Markdown file there is often the natural home; ask if unsure.
-  - Whatever the container, write the draft to a local Markdown file first (step 4): the checks in step 5 run on it.
+  - Keep a local Markdown draft for the checks in step 5, using a scratch folder supported by the environment. If the destination requires creating an empty document before drafting, do that first, then prepare and check the draft before filling the document. Do not overwrite an existing destination without reading it.
 - **Context.** System name, domain, readers. If something is missing, do not stop for it: take the name from the schema or file, list assumptions at the top of the document, collect questions for «Открытые вопросы». Ask up front only what would send the result to the wrong place (e.g. the wiki space).
 
 ### 1. Parse the DDL
@@ -84,7 +86,7 @@ python3 "$SKILL_DIR/scripts/render_er.py" model.json -o er_full.svg --labels lab
 
 - Lines are straight and orthogonal (horizontal and vertical segments only), leave the parent's PK row and enter the child's FK row, parents on the left, children on the right, Russian verb labels beside their lines. Boxes are square-cornered and contain only English identifiers: table name, columns, types. The script does this; do not replace it with PlantUML, Mermaid or Graphviz — none of them can anchor right-angled lines to rows.
 - Up to 15 entities — one detailed diagram; more — an overview (`--keys-only`) plus one per subject area (`--tables`).
-- **Open the PNG and look at it.** No line over a box or text, labels next to their own lines and off the markers, no small steps, not wider than ~1800 px. If not, split by subject area or give a layout hint in `labels.json` and render again.
+- **Open the PNG with an available image tool and inspect it.** If image inspection is unavailable, state that visual QA remains unverified; do not claim it passed. No line over a box or text, labels next to their own lines and off the markers, no small steps, not wider than ~1800 px. If not, split by subject area or give a layout hint in `labels.json` and render again.
 - No PNG even after the install attempt above: deliver the SVG and say so.
 
 ### 4. Write the document

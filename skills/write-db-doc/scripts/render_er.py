@@ -14,7 +14,7 @@ Style (see references/er-diagram.md):
   * verb labels on links are Russian (they read as a sentence from parent to child).
 
 Output: SVG, plus PNG when cairosvg or rsvg-convert is available
-(pip install --break-system-packages cairosvg).
+(install cairosvg in a virtual environment).
 
 Usage:
     python3 render_er.py model.json -o er.svg --labels labels.json --title "CRM: логическая структура"
@@ -985,7 +985,7 @@ def main():
             ok = subprocess.run(['rsvg-convert', '-z', str(args.png_scale), '-o', str(png), str(out)]).returncode == 0
     n_cross = sum(crossings(sorted([q for q in p if not q.straight], key=lambda q: q.x))
                   for p in parts.values())
-    print(f'OK: {out}' + (f' and {png}' if ok else ' (no PNG: pip install --break-system-packages cairosvg)'))
+    print(f'OK: {out}' + (f' and {png}' if ok else ' (no PNG: install cairosvg in a virtual environment)'))
     print(f'Entities {len(boxes)} (stubs {sum(b.stub for b in boxes.values())}), links {len(links)} '
           f'(logical {sum(1 for l in links if l.get("logical"))}), '
           f'columns {len(cols)}, size {width:.0f}x{height:.0f}px, track crossings {n_cross}.')

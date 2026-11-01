@@ -94,5 +94,5 @@ If it looks wrong: split into subject areas; move a reference table with `layout
 ## 5. Environment
 
 - Python 3 standard library for the SVG.
-- PNG needs `cairosvg` (`pip install --break-system-packages cairosvg`) or the `rsvg-convert` command. Without either you still get SVG: attach it and say PNG was not produced.
+- PNG needs `cairosvg` (install with the selected virtual environment's interpreter: `<venv-python> -m pip install cairosvg`) or the `rsvg-convert` command. Without either you still get SVG: attach it and say PNG was not produced.
 - Text widths are measured with Pillow and DejaVu Sans when available, otherwise estimated; the SVG asks for DejaVu Sans, Arial or Helvetica.

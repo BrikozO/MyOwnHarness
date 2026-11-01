@@ -1,11 +1,21 @@
 ---
 name: "commit-push-task"
-description: "Commit and push the current work for an issue or ticket with a short, readable message: a \"Resolve\" header with the issue number, then a bullet list of what changed, and no Claude co-author or \"generated with\" trailer. If the branch already has an open merge request (or pull request), also update that MR's description so it reflects the new commit. Use this skill for every request to commit or push changes, with or without an issue number (it takes the issue from the message, else from the branch name, else asks), e.g. \"commit\", \"commit and push\", \"закоммить\", \"закоммить и запушь\", \"запушь изменения\", \"сделай коммит, issue 87\", \"commit-push-task 123\", \"push the fix for PROJ-12\", \"закоммить и обнови описание мр\", even if they do not name the skill. Prefer it over a plain git commit whenever Claude is about to create a commit."
+description: 'Commit and push changes for an issue or ticket (commit, push, закоммить, запушь). Use Resolve: <issue> and a bullet list, preserve existing staging, omit AI attribution, and update the description of an existing MR/PR after a successful push. Find the issue in the request or branch name; ask if absent. Use for commit/push requests, including those without an issue number.'
 ---
 
 # Commit & Push Task
 
 Turn the current changes in a git repository into one clean commit tied to an issue, push it, and — if the branch already has an open merge request — bring the MR description up to date. The point is a history that a teammate can skim: the header says which issue the commit closes, a few bullets say what actually changed in human terms, and the MR description always describes what the MR currently contains, not what it contained when it was opened. The MR description uses the same layout as the commit message — `Resolve:` line, then a bullet list — so commits and MRs read the same way.
+
+## Available tools and scope
+
+Use this workflow in Claude Code or Codex with the tools available in the current environment. Check capabilities and authentication before using a CLI; the commands below are examples, not assumed installations.
+
+- With a local repository and Git CLI, use Git for status, staging, diffs, commits and pushes. Identify the host and repository from its remote.
+- For GitHub metadata and existing PR updates, use an available authenticated GitHub connector/API or `gh`.
+- For GitLab, use an available authenticated GitLab API/connector or `glab`.
+- Without a local clone, a repository API may create blobs, a tree, a commit and a branch update only if it supports reading the base and comparing the current branch head atomically (expected SHA / compare-and-swap). Scope the tree to explicitly selected files, preserve every other entry and reject concurrent changes. Never update a ref forcibly. Do not treat an API commit as a push of local staged work. If the tools cannot preserve these guarantees, report the limitation and stop before mutation.
+- Preserve the established commit-and-push convention for requests invoking this workflow, including "commit". Honor explicit limits such as "commit only" or "do not push". A request to edit this skill or draft a message does not invoke its mutation workflow. Commit only changes the user authorized.
 
 ## Input
 
@@ -21,9 +31,9 @@ If neither the message nor the branch name contains an identifier, ask for it be
 
 ## Workflow
 
-1. **Look at the state of the repo.** Run `git status` and `git diff --staged`.
-   - If something is already staged, commit **only what is staged** — the user staged it deliberately and may be keeping other changes out.
-   - If nothing is staged, stage everything with `git add -A`, then review `git diff --staged`.
+1. **Look at the state of the repo.** Run `git status --short`, `git diff --staged` and `git diff`; inspect untracked files separately.
+   - If something is already staged, preserve it and commit **only what is staged**, provided it belongs to the authorized task. Do not add or unstage anything. If staging includes secrets, unrelated changes or ambiguous ownership, stop and ask before committing.
+   - If nothing is staged, review the tracked diff and each candidate untracked file, then stage only authorized task changes by explicit path (`git add -- <paths>`). For files mixing task changes and unrelated edits, stage only the relevant hunks with a supported mechanism; if the separation is ambiguous, ask before staging. Never use blanket `git add -A` or `git add .`.
    - Before committing, skim the staged file list for things that clearly don't belong in a commit: secrets (`.env`, keys, credentials), large build output, editor/OS junk. If you see any, stop and ask instead of committing them.
    - If there is nothing to commit, say so and stop.
 2. **Understand the change.** Read the staged diff (and `git log -5 --oneline` for the repo's conventions). Work out what the change does as a whole, not file by file.
@@ -37,8 +47,8 @@ If neither the message nor the branch name contains an identifier, ask for it be
    * Removed ...
    EOF
    ```
-   Do not add `Co-Authored-By: Claude ...`, `Generated with Claude Code`, emoji, or any other signature. The commit should look like the user wrote it.
-5. **Push right away** — the user invokes this skill to get the work onto the remote, so don't ask first.
+   Do not mention AI, model/provider names or assistant identities in commit messages or MR/PR titles and descriptions; add no co-author or generated-by trailers, emoji, or signatures. The commit should look like the user wrote it.
+5. **Push right away** — this workflow includes publication; continue without another confirmation unless the user explicitly requested a local commit only or forbade pushing. In that case report the commit without pushing or updating a remote MR/PR.
    - If the current branch has an upstream: `git push`.
    - If it has no upstream yet: `git push -u origin <current-branch>`.
    - If the repo has no remote at all, keep the commit, say the push was skipped and why.
@@ -83,10 +93,10 @@ Look for an **open** MR whose source branch is the current branch:
 - **GitLab** (`glab`): `glab mr list --source-branch <branch>` (lists open MRs by default), then `glab mr view <iid> -F json` for its `description`, `target_branch` and `web_url`.
 - **GitHub** (`gh`): `gh pr list --head <branch> --state open --json number,body,baseRefName,url`.
 
-Use whichever matches the remote (`git remote get-url origin`).
+Use whichever matches the remote (`git remote get-url origin`), or the corresponding connector/API. For API lookup, match repository, source branch, source owner (including forks), open state and target branch; do not update a same-named branch in another repository.
 
 - No open MR → skip this step and just mention it in the report. **Don't create an MR** — opening one is the user's decision (title, reviewers, target branch).
-- The CLI isn't installed or isn't authenticated → don't fail the whole run: the commit and push already succeeded. Say the MR wasn't updated and why, and give the user the updated description text (in the format below) so they can paste it in.
+- Neither an authenticated CLI nor a capable connector/API is available → don't fail the whole run: the commit and push already succeeded. Say the MR wasn't updated and why, and give the user the updated description text (in the format below) so they can paste it in.
 - Several open MRs from the same branch (rare) → ask which one to update.
 
 ### Description format
@@ -133,12 +143,12 @@ Change only the description. Title, labels, assignees, reviewers and draft statu
 
 ### Write it back
 
-Write the new description to a file and pass the file — never put the description inline in the command with `\n` escapes, which arrive as literal `\n` and turn the list into one line. Nothing gets appended: no AI attribution, no "Generated with Claude Code", no signature, same as the commit.
+Write the new description to a file and pass the file — never put the description inline in the command with `\n` escapes, which arrive as literal `\n` and turn the list into one line. Nothing gets appended: no AI attribution, no generated-by text, no signature, same as the commit.
 
-- **GitLab:** `glab mr update <iid> --description "$(cat /path/to/description.md)"`
+- **GitLab:** use the API/connector with the description as a structured string; if using `glab`, check `glab mr update --help` and pass the file contents as one literal argument through a process API, never interpolated shell code.
 - **GitHub:** `gh pr edit <number> --body-file /path/to/description.md`
 
-Fetch the description right before you rewrite it (not at the start of the run), so you don't overwrite an edit someone made in the meantime.
+Fetch the description right before writing. Compare it with the version used to prepare the edit; if it changed, rebuild from the latest description. Use conditional updates where supported; otherwise reread immediately before mutation and report that the API does not guarantee atomic description updates. Never overwrite a detected concurrent edit. With an API/connector, send the exact multiline text as a structured field.
 
 After writing, read the description back (`glab mr view <iid> -F json` / `gh pr view <number> --json body`) and check that it matches the file: the `Resolve:` line, the blank line, and each bullet on its own line. If it came out mangled, fix it and write it again.
 
