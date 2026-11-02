@@ -10,7 +10,7 @@
     {
       "name": "my-own-harness",
       "source": "./",
-      "description": "Скиллы write-db-doc, commit-push-task и release-tag"
+      "description": "Скиллы write-db-doc, draw-diagrams, commit-push-task и release-tag"
     },
     {
       "name": "lofi-plan",
