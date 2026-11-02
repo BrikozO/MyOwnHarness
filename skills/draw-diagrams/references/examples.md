@@ -1,100 +1,100 @@
-# Примеры создания и точечной правки
+# Creation and targeted-edit examples
 
-Имена, правила и значения ниже — условные учебные данные. Не переносить их в реальную систему без источника.
+Names, rules, and values below are fictional teaching examples. Do not apply them to a real system without a source.
 
-## Новая Use Case
+## Create a Use Case diagram
 
-Условие: покупатель оформляет заказ; проверка ограничений обязательна; промокод применяет по желанию. Вопрос — о целях и границе системы, не о порядке вызовов.
+Given: a buyer places an order; checking restrictions is mandatory; applying a promo code is optional. The question concerns goals and the system boundary, not call order.
 
 ```plantuml
 @startuml
 left to right direction
-actor "Покупатель" as Buyer
-rectangle "Система заказов" {
-  usecase "Оформить заказ" as Checkout
-  usecase "Проверить ограничения" as CheckRules
-  usecase "Применить промокод" as ApplyPromo
+actor "Buyer" as Buyer
+rectangle "Order system" {
+  usecase "Place an order" as Checkout
+  usecase "Check restrictions" as CheckRules
+  usecase "Apply a promo code" as ApplyPromo
 }
 Buyer -- Checkout
 Checkout ..> CheckRules : <<include>>
-ApplyPromo ..> Checkout : <<extend>>\n[промокод указан]
+ApplyPromo ..> Checkout : <<extend>>\n[promo code provided]
 @enduml
 ```
 
-Проверить: `include` направлен к обязательному поведению, `extend` — к базовому прецеденту; актор вне границы. Не добавлять авторизацию без требования.
+Check: `include` points to the mandatory behavior, `extend` points to the base use case, and the actor is outside the boundary. Do not add authentication without a requirement.
 
-## Новая Activity
+## Create an Activity diagram
 
-Условие: неверные данные отклоняются; для корректной заявки проверка ограничений и расчёт суммы выполняются параллельно; обе завершаются до решения. Раннюю отмену источник не задаёт.
+Given: invalid input is rejected; for a valid request, checking restrictions and calculating the amount run in parallel; both finish before a decision. The source does not specify early cancellation.
 
 ```plantuml
 @startuml
-title Обработка заявки
+title Request processing
 start
-:Получить заявку;
-if (Данные валидны?) then (да)
+:Receive request;
+if (Is the input valid?) then (yes)
   fork
-    :Проверить ограничения;
+    :Check restrictions;
   fork again
-    :Рассчитать сумму;
+    :Calculate amount;
   end fork
-  if (Результаты позволяют принять заявку?) then (да)
-    :Принять заявку;
-  else (нет)
-    :Сообщить об отказе;
+  if (Do the results allow acceptance?) then (yes)
+    :Accept request;
+  else (no)
+    :Report rejection;
   endif
-else (нет)
-  :Сообщить об ошибках данных;
+else (no)
+  :Report input errors;
 endif
 stop
 @enduml
 ```
 
-Проверить: join после запущенных параллельных веток, альтернативные исходы сходятся через merge, все результаты завершаются. Не добавлять БД/HTTP-коды без источника.
+Check: the join follows parallel branches that were started, alternatives converge through merge, and all outcomes finish. Do not add a database or HTTP codes without a source.
 
-## Правка Sequence с сохранением ID
+## Edit a Sequence diagram while preserving IDs
 
-Исходник:
+Original source:
 
 ```mermaid
 sequenceDiagram
-    participant UI as Интерфейс
-    participant API as Заказы API
-    participant Stock as Склад
-    %% correlationId передаётся во всех запросах
-    UI->>API: Оформить заказ
-    API->>Stock: Зарезервировать товар
-    Stock-->>API: Резерв создан
-    API-->>UI: Заказ принят
+    participant UI as User interface
+    participant API as Orders API
+    participant Stock as Inventory
+    %% correlationId is passed in every request
+    UI->>API: Place an order
+    API->>Stock: Reserve item
+    Stock-->>API: Reservation created
+    API-->>UI: Order accepted
 ```
 
-Запрос: склад также отвечает «Нет остатков»; после этого заказ отклоняется. Другие гарантии/коды не заданы.
+Request: inventory may also return "Out of stock"; reject the order after that response. No other guarantees or response codes are specified.
 
-Исправленный исходник:
+Edited source:
 
 ```mermaid
 sequenceDiagram
-    participant UI as Интерфейс
-    participant API as Заказы API
-    participant Stock as Склад
-    %% correlationId передаётся во всех запросах
-    UI->>API: Оформить заказ
-    API->>Stock: Зарезервировать товар
-    alt Резерв создан
-        Stock-->>API: Резерв создан
-        API-->>UI: Заказ принят
-    else Нет остатков
-        Stock-->>API: Нет остатков
-        API-->>UI: Заказ отклонён
+    participant UI as User interface
+    participant API as Orders API
+    participant Stock as Inventory
+    %% correlationId is passed in every request
+    UI->>API: Place an order
+    API->>Stock: Reserve item
+    alt Reservation created
+        Stock-->>API: Reservation created
+        API-->>UI: Order accepted
+    else Out of stock
+        Stock-->>API: Out of stock
+        API-->>UI: Order rejected
     end
 ```
 
-Дельта: единственный успешный ответ заменён взаимоисключающими исходами. Алиасы, участники, комментарий и запросы сохранены. Успех внутри успешной ветки; после отказа нет общего «Заказ принят». HTTP-коды, повторы и компенсации не придуманы.
+Delta: replace the single success response with mutually exclusive outcomes. Preserve aliases, participants, the comment, and requests. Keep success inside the successful branch; no shared "Order accepted" follows a failure. Do not invent HTTP codes, retries, or compensations.
 
-## Только оформление
+## Layout-only edit
 
-Запрос «сделай читабельнее, поведение не меняй» разрешает компоновку, переносы подписей и визуальные группы. Сравнить до/после: участники/связи, направления/типы, условия, порядок и исходы должны совпасть. Если упрощение требует изменения модели или разделения файла, показать это отдельным предложением.
+"Make it more readable without changing behavior" permits changes to layout, label wrapping, and visual groups. Compare before and after: participants/relationships, directions/types, conditions, order, and outcomes must match. If simplification requires changing the model or splitting the file, present it as a separate proposal.
 
-## Несогласованные схемы
+## Inconsistent diagrams
 
-Если Use Case говорит «Оформить заказ», Activity завершает сценарий после оплаты, а Sequence принимает заказ до оплаты, проверить источники. Не выбирать произвольный вариант. Уточнить смысл «принят», момент статуса и источник текущего/целевого поведения. Внести только подтверждённую разрешённую дельту.
+If Use Case says "Place an order", Activity finishes after payment, and Sequence accepts the order before payment, check the sources. Do not choose an arbitrary interpretation. Establish what "accepted" means, when the status is reached, and which source describes current or target behavior. Apply only a confirmed, authorized delta.

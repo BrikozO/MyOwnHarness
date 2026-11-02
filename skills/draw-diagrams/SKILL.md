@@ -1,87 +1,88 @@
 ---
 name: draw-diagrams
 description: >-
-  Создавать, редактировать и актуализировать диаграммы по требованиям, коду,
-  API-контрактам и существующим схемам. Использовать для запросов «нарисуй
-  схему», «составь диаграмму», «исправь диаграмму», «обнови sequence по коду»,
-  «проверь UML» и аналогичных запросов на английском. Основные нотации:
-  UML Use Case, Activity, Sequence; Mermaid и PlantUML. Выбирать подходящий
-  вид схемы, устранять антипаттерны, сохранять смысл и неизменяемые части
-  при правках, отдавать редактируемый исходник и проверять результат.
+  Create, edit, and maintain diagrams from requirements, code, API contracts,
+  and existing diagrams. Use for requests such as "draw a diagram", "create
+  a flowchart", "fix this diagram", "update the sequence from code", or
+  "review UML", including equivalent requests in other languages.
+  Focus on UML Use Case, Activity, and Sequence diagrams using Mermaid
+  and PlantUML. Select the appropriate model, remove antipatterns, preserve
+  meaning and unaffected content during edits, deliver editable source,
+  and verify the result.
 ---
 
-# Создание и редактирование диаграмм
+# Create and edit diagrams
 
-Превращать сведения о системе в проверяемую модель, отвечающую на конкретный вопрос читателя. Писать пояснения и подписи на языке запроса; сохранять реальные имена API, сервисов, таблиц и идентификаторы исходника.
+Turn information about a system into a verifiable model that answers a specific reader's question. Write explanations and labels in the language of the request; preserve real API, service, and table names and existing source identifiers.
 
-## Ресурсы
+## Resources
 
-- Прочитать [практики и антипаттерны лекции](references/lecture-practices.md) перед первой схемой или ревью.
-- Прочитать нужный раздел [правил нотации](references/notation.md) после выбора типа диаграммы.
-- Использовать [примеры создания и точечной правки](references/examples.md) как образцы структуры, не как сведения о системе пользователя.
+- Read [lecture practices and antipatterns](references/lecture-practices.md) before the first diagram or review.
+- Read the relevant section of the [notation guide](references/notation.md) after selecting the diagram type.
+- Use the [creation and targeted-edit examples](references/examples.md) as structural examples, not as facts about the user's system.
 
-Использовать доступные инструменты Claude Code, Codex или другой среды. Разрешать пути относительно этого `SKILL.md`. Не предполагать наличие конкретного CLI, плагина, рендерера или доступа к репозиторию. Не устанавливать зависимости и не подключать CI только ради обычной правки, если доступной проверки достаточно.
+Use the tools available in Claude Code, Codex, or another environment. Resolve resource paths relative to this `SKILL.md`. Do not assume a particular CLI, plugin, renderer, or repository access. Do not install dependencies or introduce CI just for a routine edit when the available checks are sufficient.
 
-## 1. Определить задачу и источник истины
+## 1. Establish the task and source of truth
 
-1. Выбрать режим: **создать**, **изменить** или **проверить**. При ревью без просьбы исправить вернуть замечания и предложения; не переписывать файл.
-2. Прочитать требования, исходник диаграммы и относящиеся к сценарию фрагменты кода/контракта. Соблюдать инструкции проекта и существующие правила хранения диаграмм.
-3. Сформулировать краткий паспорт: **вопрос → аудитория → граница системы → сценарий и триггер → результат → детализация**. В простом запросе уложить его в одну фразу; не создавать отдельный документ ради паспорта.
-4. Разделить факты, допущения и открытые вопросы. Не превращать догадку в бизнес-правило, участника, ответ API или связь. При расхождении источников указать конфликт; различать текущее поведение (`as-is`) и предлагаемое (`to-be`). Не выдавать желаемое за реализованное.
-5. Уточнять только то, что меняет существенную семантику или место записи: например, нужно ли дождаться всех параллельных проверок. По остальным пробелам сделать минимальную схему с явными допущениями. Не останавливать работу ради цвета, расположения или очевидного выбора нотации.
+1. Choose a mode: **create**, **edit**, or **review**. For a review without a request to fix the diagram, return findings and suggestions; do not rewrite the file.
+2. Read the requirements, diagram source, and code or contract sections relevant to the scenario. Follow project instructions and existing diagram storage conventions.
+3. Define a short diagram brief: **question → audience → system boundary → scenario and trigger → outcome → detail level**. For a simple request, use one sentence; do not create a separate document just for the brief.
+4. Separate facts, assumptions, and open questions. Do not turn a guess into a business rule, participant, API response, or relationship. Identify conflicting sources; distinguish current behavior (`as-is`) from proposed behavior (`to-be`). Do not present desired behavior as implemented.
+5. Ask only about gaps that materially affect semantics or the write destination, such as whether all parallel checks must finish. For other gaps, create a minimal diagram with explicit assumptions. Do not block on colors, placement, or an obvious notation choice.
 
-Для новой схемы извлечь участников/объекты, ответственность, действия, сообщения, условия, основной путь, существенные альтернативы и ошибки. Для сложных комбинаций условий сначала составить таблицу решений. Рассматривать граничные значения и редкие сочетания условий, если они влияют на результат.
+For a new diagram, extract participants or objects, responsibilities, actions, messages, conditions, the main path, and significant alternatives and errors. For complex combinations of conditions, start with a decision table. Consider boundary values and rare combinations when they affect the outcome.
 
-Для исходника только в PNG/PDF прочитать изображение, отметить неразборчивые подписи и восстановленные элементы. Запросить редактируемый оригинал, если без него нельзя надёжно выполнить точную правку; пока можно подготовить отдельную реконструкцию с отмеченными неопределённостями. Не заявлять о точном сохранении геометрии или скрытых данных изображения.
+When the only source is a PNG or PDF, inspect the image and identify unreadable labels and reconstructed elements. Request the editable original if an accurate edit requires it; meanwhile, prepare a separate reconstruction with uncertainties marked where possible. Do not claim exact preservation of geometry or hidden image data.
 
-## 2. Выбрать модель и формат
+## 2. Select the model and source format
 
-| Вопрос читателя | Модель | Исходник при отсутствии стандарта проекта |
+| Reader's question | Model | Source when the project has no standard |
 |---|---|---|
-| Кто пользуется системой и какие цели достигает? | UML Use Case | PlantUML |
-| Как выполняется процесс, где решения и параллельные шаги? | UML Activity | PlantUML; Mermaid flowchart для упрощённой блок-схемы с оговорённой семантикой |
-| Кто, кому и в каком порядке отправляет сообщения? | UML Sequence | Mermaid для Markdown, PlantUML при нужной UML-выразительности |
-| Из чего состоит система, где границы и зависимости? | C4 | Принятый C4-инструмент; один уровень на схеме |
-| Как согласовать регламент и взаимодействие участников процесса? | BPMN | Редактируемый BPMN-исходник в доступном инструменте |
-| Как связаны сущности и данные? | ER | Принятая ER-нотация; для документации БД использовать `write-db-doc`, если доступен |
-| Как пройти простой алгоритм или инструкцию? | Блок-схема | Mermaid flowchart |
+| Who uses the system, and which goals do they achieve? | UML Use Case | PlantUML |
+| How does the process run, including decisions and parallel steps? | UML Activity | PlantUML; Mermaid flowchart for a simplified flowchart with its semantics explained |
+| Who sends which messages to whom, and in what order? | UML Sequence | Mermaid for Markdown; PlantUML when the required UML expressiveness warrants it |
+| What makes up the system, and where are its boundaries and dependencies? | C4 | The established C4 tool; one level per diagram |
+| How can participants agree on a formal process and their interactions? | BPMN | Editable BPMN source in an available tool |
+| How are entities and data related? | ER | The established ER notation; use `write-db-doc` for database documentation if available |
+| How does a simple algorithm or procedure work? | Flowchart | Mermaid flowchart |
 
-Сохранять формат существующей схемы, если пользователь не просит конверсию и формат позволяет выразить изменение. Не менять его ради удобного рендерера. Проверять поддержку конструкций версией проекта. Не выдавать имитацию UML/BPMN через произвольные блоки за полноценную нотацию. Для C4, BPMN и ER использовать профильные правила/скиллы при наличии; этот скилл задаёт общий процесс, а подробные правила охватывают три поведенческие UML-диаграммы.
+Preserve the existing format unless the user requests conversion or the format cannot express the change. Do not switch formats for renderer convenience. Check construct support in the project's renderer version. Do not present arbitrary boxes imitating UML or BPMN as the full notation. For C4, BPMN, and ER, use specialist rules or skills when available; this skill defines the general workflow, while its detailed notation rules cover the three behavioral UML diagram types.
 
-## 3A. Создать новую диаграмму
+## 3A. Create a new diagram
 
-1. Построить основной сценарий на выбранном уровне. Использовать единый словарь и краткие содержательные подписи; различать бизнес-роль, сервис и метод.
-2. Добавить подтверждённые альтернативы, отказы, тайм-ауты и завершения, нужные для ответа на вопрос. Не дорисовывать неизвестные ретраи, коды ответа, компенсации и транзакционные гарантии.
-3. Независимые сценарии с разными триггерами размещать на отдельных схемах. Ветки одного сценария держать с основным путём, пока схема читается; глубокие фрагменты выносить в именованные поддиаграммы с понятной связью.
-4. Проследить значимые элементы до требования, контракта, кода или отмеченного допущения. Для маленькой схемы достаточно краткой ссылки рядом; для большой дать таблицу `Элемент/путь → источник`. Не придумывать номера требований и ссылки.
-5. Разместить исходник в согласованном месте. В репозитории использовать существующий каталог диаграмм; при отсутствии — `docs/diagrams/`. Для самостоятельного ответа можно вернуть полный блок исходника в чате.
+1. Build the main scenario at the chosen level. Use consistent terminology and concise, meaningful labels; distinguish a business role, a service, and a method.
+2. Add confirmed alternatives, failures, timeouts, and endings needed to answer the question. Do not invent retries, response codes, compensations, or transaction guarantees.
+3. Put independent scenarios with different triggers in separate diagrams. Keep branches of one scenario with its main path while readable; extract deeply nested fragments into named subdiagrams with clear references.
+4. Trace significant elements to a requirement, contract, code, or explicitly marked assumption. A short nearby reference is enough for a small diagram; for a larger one, provide an `Element/path → source` table. Do not invent requirement IDs or links.
+5. Save editable source in the agreed location. In a repository, use the existing diagram directory; otherwise use `docs/diagrams/`. For a standalone answer, a complete source block in chat is acceptable.
 
-## 3B. Изменить существующую диаграмму
+## 3B. Edit an existing diagram
 
-1. Прочитать текущий файл целиком, включая комментарии, метаданные и окружающий Markdown. Найти связанные схемы/ссылки в пределах затронутого сценария. Для сгенерированной картинки найти исходник или генератор и менять его.
-2. Зафиксировать границу правки: какой участник, шаг, условие или контракт меняется и что должно сохраниться. Если выделен фрагмент, править только его. Изменения вне выделения описать как предложения; не применять автоматически.
-3. Составить семантическую дельту: добавленные/удалённые/изменённые элементы и связи. Отделить поведение от компоновки. В режиме «только оформление» сохранить участников, условия, порядок и типы сообщений, начальные/конечные состояния.
-4. Применить минимальный патч. Сохранить ID/алиасы, имена, формат, комментарии и стиль вне необходимого изменения. Не пересоздавать схему и не переименовывать объекты без причины. Удалять только подтверждённо устаревшее.
-5. Проверить последствия: входящие/исходящие связи, guards, парность фрагментов, синхронизацию, ответы, ссылки на поддиаграммы. Не оставлять сообщений удалённому участнику или висячих ссылок.
-6. Сопоставить затронутые Use Case → Activity → Sequence: термины, границы, исходы и порядок должны согласовываться на своих уровнях. Менять связанные файлы только в разрешённой области задачи; остальное перечислить как необходимую правку.
-7. Перед записью сравнить текущую версию с прочитанной, если возможно совместное редактирование. При изменении перечитать файл и пересчитать патч; при неоднозначном пересечении уточнить. Проверить diff: вне разрешённой области не должно быть случайных изменений.
+1. Read the entire current file, including comments, metadata, and surrounding Markdown. Find related diagrams and references within the affected scenario. For a generated image, locate and edit its source or generator.
+2. Establish the edit boundary: which participant, step, condition, or contract changes, and what must remain intact. If a fragment is selected, edit only that fragment. Describe changes outside the selection as proposals; do not apply them automatically.
+3. Define the semantic delta: added, removed, or changed elements and relationships. Separate behavior changes from layout changes. In a layout-only edit, preserve participants, conditions, message order and types, and initial and final states.
+4. Apply a minimal patch. Preserve IDs and aliases, names, format, comments, and style outside the necessary change. Do not recreate the diagram or rename objects without a reason. Remove only elements confirmed to be obsolete.
+5. Check consequences: incoming and outgoing relationships, guards, paired fragments, synchronization, responses, and subdiagram references. Do not leave messages to removed participants or dangling links.
+6. Compare affected Use Case → Activity → Sequence diagrams: terminology, boundaries, outcomes, and order must agree at their respective levels. Edit related files only within the authorized task scope; list other necessary changes.
+7. Before writing, compare the current version with the version read when collaborative editing is possible. If it changed, reread and recompute the patch; clarify ambiguous overlaps. Inspect the diff for accidental changes outside the authorized scope.
 
-## 4. Проверить результат
+## 4. Verify the result
 
-Выполнить смысловую и синтаксическую проверки отдельно: успешный рендер не подтверждает правильность модели.
+Check semantics and syntax separately: successful rendering does not establish model correctness.
 
-- **Смысл:** отвечает ли схема на вопрос; соблюдены ли границы и уровень; подтверждены ли элементы; не потеряны ли существенные исходы; согласованы ли связанные схемы.
-- **Use Case:** внешние роли, пользовательские цели, корректные направления `include`, `extend` и обобщения.
-- **Activity:** достижимость и завершение путей; понятные условия; merge не заменён join; fork/join не превращают альтернативы в ожидание нескольких веток.
-- **Sequence:** причинный порядок; различение вызовов/событий/ответов; условия `alt/opt`, границы `loop/par/ref`; синхронный результат не скрыт, если влияет на продолжение; активации сбалансированы, когда используются.
-- **Синтаксис:** запустить доступный проектный валидатор/рендерер с принятой конфигурацией. Проверить результат команды; не считать поиск парных `end` полноценной проверкой синтаксиса.
-- **Изображение:** открыть доступный рендер. Проверить подписи, стрелки, пересечения, группы, обрезку и читаемость в целевом размере. Перегруженную схему упростить или разделить по сценарию/уровню; не уменьшать шрифт до нечитаемого.
-- **Правка:** сверить до/после по дельте и diff; сохранить неизменяемые фрагменты; проверить затронутые ссылки и изображения.
+- **Meaning:** the diagram answers the question, respects boundaries and detail level, grounds elements in sources, retains significant outcomes, and agrees with related diagrams.
+- **Use Case:** external roles, user goals, and correct directions for `include`, `extend`, and generalization.
+- **Activity:** reachable paths and explicit endings, clear conditions, merge distinguished from join, and fork/join not turning alternatives into a wait for multiple branches.
+- **Sequence:** causal order, distinct calls/events/responses, clear `alt/opt` conditions and `loop/par/ref` boundaries, visible synchronous results when continuation depends on them, and balanced activations when used.
+- **Syntax:** run the available project validator or renderer with the established configuration. Inspect the command result; matching pairs of `end` is not a full syntax check.
+- **Image:** open the available render. Check labels, arrows, crossings, groups, clipping, and readability at the target size. Simplify an overloaded diagram or split it by scenario or level; do not shrink text until it becomes unreadable.
+- **Edit:** compare before and after against the delta and diff; preserve unaffected fragments and check affected links and images.
 
-Если рендерер или просмотр недоступен, отдать исходник, выполнить доступную ручную проверку и точно назвать непроверенное. Не сообщать об успешном рендере/визуальной проверке, если их не выполняли. Не отправлять приватные исходники во внешний рендерер без разрешения пользователя.
+If rendering or image inspection is unavailable, deliver editable source, perform available manual checks, and state exactly what remains unverified. Do not claim rendering or visual QA passed when they were not performed. Do not send private source to an external renderer without the user's permission.
 
-## 5. Передать результат и поддерживать актуальность
+## 5. Deliver and maintain
 
-Вернуть созданный/исправленный исходник (или ссылку), кратко объяснить выбор модели либо дельту, перечислить существенные допущения/вопросы и фактически выполненные проверки. При доступном рендере передать его вместе с исходником. При ревью привязать замечания к элементам и объяснить последствия с конкретной правкой.
+Return the created or edited source, or a link to it. Briefly explain the model choice or edit delta, significant assumptions and questions, and checks actually performed. Include the render with the source when available. For reviews, tie findings to elements and explain their consequences with concrete fixes.
 
-В репозитории хранить диаграмму рядом с кодом и менять вместе с поведением. Для поддерживаемых схем указать известного владельца и источник; неизвестного владельца не выдумывать. Обновлять устойчивые схемы при изменении границ/целей, Sequence ключевых сценариев — при изменении взаимодействий и API-контрактов. Быстро меняющиеся внутренние детали генерировать либо исключать из ручного сопровождения. Использовать имеющуюся CI-проверку; новую предлагать при необходимости, не внедрять инфраструктуру в рамках обычной правки.
+In a repository, keep diagrams near code and update them with the behavior they describe. Record the known owner and source for maintained diagrams; do not invent an owner. Update stable diagrams when goals or boundaries change, and key-scenario Sequence diagrams when interactions or API contracts change. Generate rapidly changing internals or omit them from manual maintenance. Use existing CI checks; propose new ones when necessary, without introducing infrastructure as part of a routine diagram edit.

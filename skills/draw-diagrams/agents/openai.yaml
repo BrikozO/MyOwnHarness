@@ -1,4 +1,4 @@
 interface:
-  display_name: "Диаграммы: создание и правки"
-  short_description: "Создание и обновление UML и других схем по источникам"
-  default_prompt: "Используй $draw-diagrams, чтобы создать или исправить диаграмму по требованиям и проверить её семантику."
+  display_name: "Create and Edit Diagrams"
+  short_description: "Create and update diagrams from verified sources"
+  default_prompt: "Use $draw-diagrams to create or update a diagram from requirements and check its semantics."
